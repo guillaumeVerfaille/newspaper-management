@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title></title>
+    </head>
+    <body>
+        <?php
+        echo 'Test xml <br>';
+        $dom = new DOMDocument('1.0','UTF-8');
+
+        $racine = $dom->createElement('continent');
+        $dom->appendChild($racine);
+
+        $pays = $dom->createElement('pays');
+        $contenu = $dom->createTextNode('Belgique');
+        $pays->appendChild($contenu);
+        $racine->appendChild($pays);
+
+        $pays = $dom->createElement('pays','France');
+        $pays->setAttribute('regime', 'Republique');
+        $racine->appendChild($pays);
+
+        $dom->save('test.xml');
+
+        $dom2 = new DOMDocument('1.0', 'UTF-8');
+        $dom2->load('test.xml');
+
+        $result = $dom2->getElementsByTagName('continent')->item(0);
+        echo $result->nodeName . '<br>' ;
+
+        $liste = $dom2->getElementsByTagName('pays');
+        foreach ($liste as $pays)
+        {
+            echo $pays->firstChild->nodeValue . '<br>';
+        }
+        ?>
+    </body>
+</html>

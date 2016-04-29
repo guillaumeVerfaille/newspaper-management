@@ -1,0 +1,49 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/HTML; charset=iso-8859-1"  />
+<title>Génération de PDF</title>
+<style>
+p {margin:10px;}
+</style>
+</head>
+<body>
+<h1>Utilisation de FOP pour la génération de PDF</h1>
+<p>
+FOP est un processeur FO mis à disposition par la fondation Apache.
+Télécharger et décompresser FOP sur le disque.
+</p>
+<p>
+Tester dans le r&eacute;pertoire en mode commande fop.bat test.fo test.pdf&nbsp; pour voir si java est bien install&eacute;. 
+</p>
+<p>
+Dans PHP (&agrave; vous de d&eacute;terminer le contenu des variables) :
+</p>
+<p>
+&nbsp;&nbsp;&nbsp; // 1&egrave;re &eacute;tape cr&eacute;er le fo &agrave; partir de la source xml et du xsl&nbsp;
+</p>
+<p>
+&nbsp;&nbsp;&nbsp; $xsl = new XSLTProcessor();<br />
+&nbsp;&nbsp;&nbsp; $xsl-&gt;setParameter(&#39;&#39;, &#39;title&#39;, $titre);<br />
+&nbsp;&nbsp;&nbsp; $xsl-&gt;importStyleSheet(DOMDocument::load($xslfile));<br />
+&nbsp;&nbsp;&nbsp; $content = $xsl-&gt;transformToXML(DOMDocument::load($xmlfile));<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp; // 2&egrave;me &eacute;tape enregistrer le r&eacute;sultat du fichier XSL dans un fichier .fo 
+</p>
+<p>
+<br />
+&nbsp;&nbsp;&nbsp; $temp = fopen($fichierfo, &#39;w&#39;);<br />
+&nbsp;&nbsp;&nbsp; fwrite($temp,$content);<br />
+&nbsp;&nbsp;&nbsp; fclose($temp);<br />
+<br />
+&nbsp;&nbsp;&nbsp; // 3&egrave;me &eacute;tape cr&eacute;ation du fichier PDF <br />
+</p>
+<p>
+&nbsp;&nbsp;&nbsp; //cr&eacute;ation du fichier PDF&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; passthru(&quot;c:\fop\fop.bat $fichierfo $fichierpdf &quot;);<br />
+&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; echo &quot;&lt;html&gt;&lt;head&gt;&lt;script language=&#39;javascript&#39;&gt;window.location.href=&#39;&quot;.$fichierpdf.&quot;&#39;&lt;/script&gt;&lt;head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;&quot;; <br />
+&nbsp;&nbsp;&nbsp; ou     header("Location: $fichier_pdf");
+</p>
+<!-- content: html tiny_mce -->
+</body></html>
