@@ -14,3 +14,8 @@
 3. **Exécuter le fichier blabla.out et blabla2.out**
 
  Dans chacun des deux terminaux linux, entrez la commande suivante :  `sudo ./blabla.out` ou `sudo ./blabla2.out`
+ 
+ chacun de ces deux fichiers va créer le chat pour son utilisateur. C'est pourquoi, il faut exécuter les fichiers sur deux terminaux différents.
+4. **Voila c'est prêt**
+  
+ Vous pouvez maintenant communiquer entre deux utilisateurs différent.
