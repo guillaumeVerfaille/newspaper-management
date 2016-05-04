@@ -1,6 +1,6 @@
 #Laboratoire d'OS : Développement d'un tchat
 ************
-#Comment utiliser le tchat ?
+##Comment utiliser le tchat ?
 
 1. compiler les trois fichiers 
 ----------
