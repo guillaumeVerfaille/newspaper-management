@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php
-/*echo 'Test: �crivons du xml <br>';
+echo 'Test: �crivons du xml <br>';
 $dom = new DOMDocument('1.0','UTF-8');
 
 $racine = $dom->createElement('journal');
@@ -32,15 +32,15 @@ $article->appendChild($auteur);
 $article->appendChild($contenu);
 
 $dom->save('test.xml');
-*/
+
 $fichierxml = new DOMDocument('1.0', 'UTF-8');
 $fichierxml->load('journal.xml');
 
 $liste = $fichierxml->getElementsByTagName('article');
-var_dump($liste);
+//var_dump($liste);
 foreach ($liste as $article)
 {
-	var_dump($article);
+	//var_dump($article);
     $titre = $article->getElementsByTagName('titre')->item(0);
     $auteur = $article->getElementsByTagName('auteur')->item(0);
     $contenu = $article->getElementsByTagName('contenu')->item(0);
