@@ -8,4 +8,5 @@
      gcc server.c -o server.o
 2. **Exécuter le fichier server.out**
 
-Dans votre terminal linux, entrez la commande suivante :  sudo ./server.out
+ Dans votre terminal linux, entrez la commande suivante :  sudo ./server.out
+ il est important d'éxécuter le fichier server.out car il créer les deux queues qui permettent d'envoyer et de reçevoir des messages.
