@@ -34,7 +34,16 @@ $article->appendChild($contenu);
 $dom->save('test.xml');
 
 $fichierxml = new DOMDocument('1.0', 'UTF-8');
-$fichierxml->load('journal.xml');
+$fichierxml->load('test.xml');
+
+
+$newxml = new DOMDocument('1.0', 'UTF-8');
+	$racine = $newxml->createElement('journal');
+	$newxml->appendChild($racine);
+
+	$articlexml = $newxml->createElement('article');
+	$racine->appendChild($articlexml);
+
 
 $liste = $fichierxml->getElementsByTagName('article');
 //var_dump($liste);
@@ -44,8 +53,31 @@ foreach ($liste as $article)
     $titre = $article->getElementsByTagName('titre')->item(0);
     $auteur = $article->getElementsByTagName('auteur')->item(0);
     $contenu = $article->getElementsByTagName('contenu')->item(0);
+    //test
+
+
+
+   	$titrexml = $newxml->createElement('titre');
+	$contenu_titre = $newxml->createTextNode($titre->nodeValue);
+	$titrexml->appendChild($contenu_titre);
+
+	$auteurxml = $newxml->createElement('auteur');
+	$contenu_auteur = $newxml->createTextNode($auteur->nodeValue);
+	$auteurxml->appendChild($contenu_auteur);
+
+	$contenuxml = $newxml->createElement('contenu');
+	$contenu_contenu = $newxml->createTextNode($contenu->nodeValue);
+	$contenuxml->appendChild($contenu_contenu);
+
+	$articlexml->appendChild($titrexml);
+	$articlexml->appendChild($auteurxml);
+	$articlexml->appendChild($contenuxml);
+
+    //test
     var_dump($titre->nodeValue, $auteur->nodeValue,$contenu->nodeValue);
 }
+$newxml->save('newxml.xml');
+
 ?>
 </body>
 </html>

@@ -1,4 +1,33 @@
-<?php ?>
+<?php 
+session_start();
+//pour executer et afficher les erreurs du programme: exec(command 2>&1);
+//var_dump($_POST['delete']);
+if(isset($_POST['validate'])){
+    $dom = creatArticle();
+    $dom->save("article.xml");
+    unset($_POST['validate']);
+    /*$random = rand(0,100);
+    $dom->save($random . "article.xml");*/
+    //var_dump($dom);
+}
+elseif (isset($_POST['delete']) /*&& (!empty($_POST['delete']))*/ ) {
+    
+    $doc = new DOMDocument('1.0', 'UTF-8');
+    $doc->load('article.xml');
+    $journal = $doc->documentElement;
+    $article = $journal->getElementsByTagName('article')->item(0);
+    $deletedArticle = $journal->removeChild($article);
+    $doc->save("article.xml");
+
+    unset($_POST['delete']);
+}
+elseif (isset($_POST['modify'])) {
+    $dom = creatArticle();
+    $dom->save("article.xml");
+    unset($_POST['modify']);
+}
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -32,61 +61,98 @@
 
         <?php
         $fichierxml = new DOMDocument('1.0', 'UTF-8');
-		$fichierxml->load('journal.xml');
+		$fichierxml->load('article.xml');
 
 		$liste = $fichierxml->getElementsByTagName('article');
-		//var_dump($liste);
+	    //var_dump($liste);
 		foreach ($liste as $article)
 			{
-                $i=1
+                $i=1;
 				$titre = $article->getElementsByTagName('titre')->item(0);
     			$auteur = $article->getElementsByTagName('auteur')->item(0);
     			$contenu = $article->getElementsByTagName('contenu')->item(0);
 				echo '<div class="panel panel-default" name="',$titre->nodeValue,'" id="',$i,'">
             	<div class="form-group" style="margin: 6px;">
+                <form action="printArticle.php" method="POST" style="margin: 6px;">
             	<label class="">',$titre->nodeValue,'</label>
-                <button type="submit" class="btn btn-success btn-xs" id="print ',$i,'" name="',$titre->nodeValue,'">print</button>
-                <button type="submit" class="btn btn-primary btn-xs" id="modify ',$i,'" name="modify ',$titre->nodeValue,'">modify</button>
-                <button type="submit" class="btn btn-danger btn-xs" id="delete ',$i,'" name="delete ',$titre->nodeValue,'">delete</button>
+                <button type="submit" class="btn btn-success btn-xs" id="print ',$i,'" name="print">print</button>
+                </form>
+                <form action="modifyArticle.php" method="POST" style="margin: 6px;">
+                <button type="submit" class="btn btn-primary btn-xs" id="modify ',$i,'" name="modify">modify</button>
+                </form>
+                <form action="index.php" method="POST" style="margin: 6px;">
+                <button type="submit" class="btn btn-danger btn-xs" id="delete ',$i,'" name="delete">delete</button>
+                </form>
             	</div></div>';
                 $i=$i+1;
             //var_dump($titre->nodeValue, $auteur->nodeValue,$contenu->nodeValue);
 			}
         ?>
+
         </div>
     </div>
 	</div>
 </body>
 </html>
-<?php 
-session_start();
-//pour executer et afficher les erreurs du programme: exec(command 2>&1);
-if(isset($_POST['valider'])){
-	
-	$dom = new DOMDocument('1.0','UTF-8');
-	$racine = $dom->createElement('journal');
-	$dom->appendChild($racine);
+<?php
+function creatArticle(){
+    $dom = new DOMDocument('1.0', 'UTF-8');
+    $newdom = new DOMDocument('1.0', 'UTF-8');
+    $dom->load('article.xml');
+    
+    $liste = $dom->getElementsByTagName('article');
+    //var_dump($liste);
+    $racine = $newdom->createElement('journal');
+    $newdom->appendChild($racine);
 
-	$article = $dom->createElement('article');
-	$racine->appendChild($article);
+    $articledom = $newdom->createElement('article');
+    $racine->appendChild($articledom);
 
-	$titre = $dom->createElement('titre');
-	$contenu_titre = $dom->createTextNode($_POST['titreArticle']);
-	$titre->appendChild($contenu_titre);
+    $titre = $newdom->createElement('titre');
+    $contenu_titre = $newdom->createTextNode($_POST['titreArticle']);
+    $titre->appendChild($contenu_titre);
 
-	$auteur = $dom->createElement('auteur');
-	$contenu_auteur = $dom->createTextNode($_POST['nomAuteur']);
-	$auteur->appendChild($contenu_auteur);
+    $auteur = $newdom->createElement('auteur');
+    $contenu_auteur = $newdom->createTextNode($_POST['nomAuteur']);
+    $auteur->appendChild($contenu_auteur);
 
-	$contenu = $dom->createElement('contenu');
-	$contenu_contenu = $dom->createTextNode($_POST['contenu']);
-	$contenu->appendChild($contenu_contenu);
+    $contenu = $newdom->createElement('contenu');
+    $contenu_contenu = $newdom->createTextNode($_POST['contenu']);
+    $contenu->appendChild($contenu_contenu);
 
-	$article->appendChild($titre);
-	$article->appendChild($auteur);
-	$article->appendChild($contenu);
-	$dom->save('article.xml');
-	var_dump($dom);
+    $articledom->appendChild($titre);
+    $articledom->appendChild($auteur);
+    $articledom->appendChild($contenu);
+
+    foreach ($liste as $article)
+        {
+            $titre = $article->getElementsByTagName('titre')->item(0);
+            $auteur = $article->getElementsByTagName('auteur')->item(0);
+            $contenu = $article->getElementsByTagName('contenu')->item(0);
+
+            $articledom = $newdom->createElement('article');
+            $racine->appendChild($articledom);
+
+            $titredoc = $newdom->createElement('titre');
+            $contenu_titre = $newdom->createTextNode($titre->nodeValue);
+            $titredoc->appendChild($contenu_titre);
+
+            $auteurdoc = $newdom->createElement('auteur');
+            $contenu_auteur = $newdom->createTextNode($auteur->nodeValue);
+            $auteurdoc->appendChild($contenu_auteur);
+
+            $contenudoc = $newdom->createElement('contenu');
+            $contenu_contenu = $newdom->createTextNode($contenu->nodeValue);
+            $contenudoc->appendChild($contenu_contenu);
+
+            $articledom->appendChild($titredoc);
+            $articledom->appendChild($auteurdoc);
+            $articledom->appendChild($contenudoc);
+            }
+    return $newdom;
+}
+function modifyArticle(){
+
 }
 
 ?>
