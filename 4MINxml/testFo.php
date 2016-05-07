@@ -22,22 +22,19 @@
            <?php
             $titre = "test";
             $fichierxml = new DOMDocument('1.0', 'UTF-8');
-            $fichierxml->load('C:\fop-2.1-bin\fop-2.1\journal.xml');
+            $fichierxml->load('journal.xml');//import du xml
             $fichierxsl = new DOMDocument();
-            $fichierxsl->load('C:\fop-2.1-bin\fop-2.1\journal.xslt');
+            $fichierxsl->load('journal.xslt');//import du schéma
             
             $xsl = new XSLTProcessor();
             //$xsl->setParameter("",'title',$titre);
             $xsl->importStyleSheet($fichierxsl);
             $content = $xsl->transformToXML($fichierxml);
-            echo $content;
 
             $temp = fopen('journal.fo', 'w');
             fwrite($temp,$content);
             fclose($temp);
-            exec("rundll32 SHELL32.DLL,ShellExec_RunDLL "."C:\\WINDOWS\\system32\\cmd.exe /K"."fop journal.fo resultat.pdf");
-            //passthru("C:\fop-2.1-bin\fop-2.1\fop.bat journal.fo journal.pdf");
-            //header("Location: $C:\fop-2.1-bin\fop-2.1\journal.pdf");
+            exec("C:/wamp/www/fop/fop.bat journal.fo journal.pdf 2>&1");
             ?>
         </div>
         </div>

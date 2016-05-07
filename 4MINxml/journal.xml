@@ -1,13 +1,2 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<journal>
-    <article>
-      <titre>premier article</titre>
-      <auteur>Guillaume</auteur>
-      <contenu>contenu du premier article</contenu>
-    </article>
-  <article>
-    <titre>deuxième article</titre>
-    <auteur>Guillaume</auteur>
-    <contenu>contenu du deuxième article</contenu>
-  </article>
-</journal>
+<?xml version="1.0" encoding="UTF-8"?>
+<journal><article><titre>coucou</titre><auteur>guillaume</auteur><contenu>bonjour</contenu></article></journal>
