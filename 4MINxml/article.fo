@@ -12,7 +12,7 @@
   </fo:layout-master-set>
   <fo:page-sequence master-reference="A4">
     <fo:flow flow-name="body">
-      <fo:block font-size="xx-large" text-align="center" color="blue">hello world</fo:block>
+      <fo:block font-size="xx-large" text-align="center" color="blue">coucou</fo:block>
       <fo:block font-size="x-large" color="green">
       Auteurs :
     </fo:block>
