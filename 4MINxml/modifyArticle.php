@@ -19,7 +19,9 @@
     <form action="modifyview.php" method="POST">
         <div class="row">
             <div class="col-md-6">
-    <?php if(isset($_POST['modify'])){
+    <?php
+    if(isset($_POST['modify'])){
+        //chargement du fichier journal.xml et récupération des id
         $fichierxml = new DOMDocument('1.0', 'UTF-8');
         $fichierxml->load('journal.xml');
         $id=$_POST['id'];
@@ -34,6 +36,7 @@
                 $auteur = $article->getElementsByTagName('auteur')->item(0);
                 $contenu = $article->getElementsByTagName('contenu')->item(0);
                 //var_dump($titre->nodeValue, $id);
+                //affiche le contenu de l'article que l'on souhaite modifié
             if(($titre->nodeValue == $id) && ($auteur->nodeValue == $id1) && ($contenu->nodeValue == $id2)){
                 echo '
                     <div class="panel panel-default" >

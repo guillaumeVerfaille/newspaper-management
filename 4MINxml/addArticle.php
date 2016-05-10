@@ -16,6 +16,7 @@
             </div>
         </div>
     </div>
+    <!--formulaire pour créer un article-->
     <form action="index.php" method="POST">
     <div class="row">
         <div class="col-md-6">

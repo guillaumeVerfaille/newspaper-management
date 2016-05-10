@@ -25,6 +25,7 @@
         </div>
     </div>
     <?php
+    //quand un article doit être supprimé
     if(isset($_POST['delete'])){
         $id=$_POST['id'];
         $dom = new DOMDocument();
@@ -45,10 +46,11 @@
             $auteur = $article->getElementsByTagName('auteur')->item(0);
             $contenu = $article->getElementsByTagName('contenu')->item(0);
             //var_dump($titre->nodeValue, $auteur->nodeValue,$contenu->nodeValue);
+            //pour l'article qui doit être supprimer, rien n'est réécrit dans le DomDocument
             if ($titre->nodeValue == $id){
                 //echo ("c'est le même id");
             }
-            else
+            else //pour les autres article, leur contenu est réécrit dans le DomDocument
             {
                 //echo ("c'est pas le même");
                 $articledom = $newdom->createElement('article');

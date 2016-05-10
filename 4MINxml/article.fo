@@ -12,15 +12,15 @@
   </fo:layout-master-set>
   <fo:page-sequence master-reference="A4">
     <fo:flow flow-name="body">
-      <fo:block font-size="xx-large" text-align="center" color="blue">coucou</fo:block>
+      <fo:block font-size="xx-large" text-align="center" color="blue">premier article modifié</fo:block>
       <fo:block font-size="x-large" color="green">
       Auteurs :
     </fo:block>
-      <fo:block>guillaume</fo:block>
+      <fo:block>benjamin</fo:block>
       <fo:block font-size="x-large" color="green">
       Contenu :
     </fo:block>
-      <fo:block>bonjour</fo:block>
+      <fo:block>hello world !!!</fo:block>
     </fo:flow>
   </fo:page-sequence>
 </fo:root>

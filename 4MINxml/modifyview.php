@@ -5,14 +5,6 @@
  * Date: 07/05/2016
  * Time: 23:31
  */?>
-<?php
-/**
- * Created by PhpStorm.
- * User: Guillaume
- * Date: 07/05/2016
- * Time: 22:14
- */
-?>
 <!doctype html>
 <html>
 <head>
@@ -32,6 +24,7 @@
     </div>
 </div>
 <?php
+//quand la modification de l'article est finie
 if (isset($_POST['continue'])) {
     $id=$_POST['id'];
     $dom = new DOMDocument();
@@ -54,7 +47,7 @@ function modifyArticle($id){
 
         $articledom = $newdom->createElement('article');
         $racine->appendChild($articledom);
-
+        //l'article que est modifié en réécrivant les nouvelles données par dessus
         if ($titre->nodeValue == $id) {
             $titre = $newdom->createElement('titre');
             $contenu_titre = $newdom->createTextNode($_POST['titreArticle']);
@@ -69,6 +62,7 @@ function modifyArticle($id){
             $articledom->appendChild($auteur);
             $articledom->appendChild($contenu);
         } else {
+            //les autres articles reste intactes
             $titredoc = $newdom->createElement('titre');
             $contenu_titre = $newdom->createTextNode($titre->nodeValue);
             $titredoc->appendChild($contenu_titre);
